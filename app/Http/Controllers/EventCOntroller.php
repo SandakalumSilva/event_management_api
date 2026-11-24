@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Event;
 use Illuminate\Http\Request;
 
 class EventCOntroller extends Controller
@@ -11,7 +12,8 @@ class EventCOntroller extends Controller
      */
     public function index()
     {
-        //
+        $events = Event::all();
+        return $events;
     }
 
     /**
@@ -25,9 +27,9 @@ class EventCOntroller extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Event $event)
     {
-        //
+        return $event;
     }
 
     /**
