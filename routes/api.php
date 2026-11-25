@@ -9,6 +9,6 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::apiResource('event', EventCOntroller::class);
+Route::apiResource('events', EventCOntroller::class);
 Route::apiResource('events.attendees',AttendeeCOntroller::class)->scoped(['attendee'=>'event']);
 
