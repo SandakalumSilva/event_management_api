@@ -17,6 +17,13 @@ class Event extends Model
         'user_id',
     ];
 
+    protected $editable = [
+        'name',
+        'description',
+        'start_date',
+        'end_date',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
