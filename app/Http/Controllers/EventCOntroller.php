@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\EventRequest;
 use App\Http\Requests\UpdateEventRequest;
+use App\Http\Resources\EventResource;
 use App\Models\Event;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,7 @@ class EventCOntroller extends Controller
     public function index()
     {
         $events = Event::all();
-        return $events;
+        return EventResource::collection(Event::with('user','attendees')->paginate());
     }
 
     /**
@@ -31,10 +32,7 @@ class EventCOntroller extends Controller
             'end_date' => $request->end_date
         ]);
 
-        return response()->json([
-            'message' => 'event created successfully',
-            'event'=>$event
-        ],201);
+        return new EventResource($event);
     }
 
     /**
@@ -42,7 +40,8 @@ class EventCOntroller extends Controller
      */
     public function show(Event $event)
     {
-        return $event;
+        $event->load('user','attendees');
+        return new EventResource($event);
     }
 
     /**
@@ -57,10 +56,7 @@ class EventCOntroller extends Controller
             'end_date' => $request->end_date
         ]);
 
-         return response()->json([
-            'message' => 'event updated successfully',
-            'event'=>$event
-        ],200);
+         return new EventResource($event);
     }
 
     /**
